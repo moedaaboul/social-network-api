@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const reactionSchema = require('./Reaction');
 // More on validation here: https://mongoosejs.com/docs/validation.html
 const thoughtSchema = new mongoose.Schema(
   {
@@ -23,10 +23,7 @@ const thoughtSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Please provide username'],
     },
-    reactions: {
-      type: Array,
-      default: [],
-    },
+    reactions: [reactionSchema],
   },
   {
     toJSON: {

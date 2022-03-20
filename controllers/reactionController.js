@@ -13,6 +13,20 @@ const createReaction = async (req, res) => {
   }
 };
 
+const removeReaction = async (req, res) => {
+  try {
+    const newThought = await Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $pull: { reactions: { reactionId: req.params.reactionId } } },
+      { runValidators: true, new: true }
+    );
+    res.status(200).json({ msg: 'added new friend', response: newThought });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   createReaction,
+  removeReaction,
 };

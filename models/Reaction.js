@@ -1,4 +1,5 @@
 const { Schema, Types } = require('mongoose');
+const formatDate = require('../utils/helpers');
 
 const reactionSchema = new Schema(
   {
@@ -19,11 +20,15 @@ const reactionSchema = new Schema(
       type: Date,
       default: Date.now,
       get: (createdAt) =>
-        Intl.DateTimeFormat('en-US', {
-          month: 'long',
-          day: 'numeric',
-          year: 'numeric',
-        }).format(new Date(createdAt)),
+        formatDate(
+          Intl.DateTimeFormat('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+          }).format(new Date(createdAt))
+        ),
     },
   },
   {

@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 const reactionSchema = require('./Reaction');
+
+const formatDate = require('../utils/helpers');
+
 // More on validation here: https://mongoosejs.com/docs/validation.html
 const thoughtSchema = new mongoose.Schema(
   {
@@ -13,11 +16,15 @@ const thoughtSchema = new mongoose.Schema(
       type: Date,
       default: Date.now(),
       get: (createdAt) =>
-        Intl.DateTimeFormat('en-US', {
-          month: 'long',
-          day: 'numeric',
-          year: 'numeric',
-        }).format(new Date(createdAt)),
+        formatDate(
+          Intl.DateTimeFormat('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+          }).format(new Date(createdAt))
+        ),
     },
     username: {
       type: String,
@@ -34,13 +41,6 @@ const thoughtSchema = new mongoose.Schema(
     id: false,
   }
 );
-
-// const formatDate = (createdAt) =>
-//   Intl.DateTimeFormat('en-US', {
-//     month: 'long',
-//     day: 'numeric',
-//     year: 'numeric',
-//   }).format(new Date(createdAt));
 
 thoughtSchema.virtual('reactionCount').get(function () {
   return this.reactions.length;

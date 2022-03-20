@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Thought } = require('../models');
 
 const createUser = async (req, res) => {
   try {
@@ -31,10 +31,17 @@ const getUsers = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    const user = await User.findByIdAndDelete({ _id: req.params.userId });
-    res.status(200).json({ user });
-  } catch (error) {
-    res.status(404).json({ msg: `No users found`, error: error });
+    const user = await User.findByIdAndDelete({
+      _id: req.params.userId,
+    });
+    console.log(user);
+    const deleteThoughts = await Thought.deleteMany({
+      _id: { $in: user.thoughts },
+    });
+    console.log(deleteThoughts);
+    res.status(200).json({ msg: 'deleted all related thoughts and user' });
+  } catch (err) {
+    res.status(404).json({ msg: `No users found`, err: err });
   }
 };
 

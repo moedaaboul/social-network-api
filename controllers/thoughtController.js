@@ -33,8 +33,20 @@ const getAllThoughts = async (req, res) => {
   }
 };
 
+const deleteThought = async (req, res) => {
+  try {
+    const thought = await Thought.findByIdAndDelete({
+      _id: req.params.thoughtId,
+    });
+    res.status(200).json(thought);
+  } catch (error) {
+    res.status(404).json({ msg: `No users found`, error: error });
+  }
+};
+
 module.exports = {
   getAllThoughts,
   getThought,
   createThought,
+  deleteThought,
 };

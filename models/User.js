@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 // More on validation here: https://mongoosejs.com/docs/validation.html
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema(
   {
     username: {
       type: String,
@@ -18,14 +18,18 @@ const userSchema = new mongoose.Schema(
       ],
       unique: true,
     },
-    thoughts: {
-      type: Array,
-      default: [],
-    },
-    friends: {
-      type: Array,
-      default: [],
-    },
+    thoughts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'thought',
+      },
+    ],
+    friends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'user',
+      },
+    ],
   },
   {
     toJSON: {
@@ -40,4 +44,4 @@ userSchema.virtual('friendCount').get(function () {
 });
 
 // Set up the model, which is a representation for the collection
-module.exports = mongoose.model('User', userSchema);
+module.exports = model('user', userSchema);

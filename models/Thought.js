@@ -50,4 +50,4 @@ thoughtSchema.virtual('reactionCount').get(function () {
 });
 
 // Set up the model, which is a representation for the collection
-module.exports = mongoose.model('Thought', thoughtSchema);
+module.exports = mongoose.model('thought', thoughtSchema);

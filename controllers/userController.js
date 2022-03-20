@@ -3,7 +3,7 @@ const { User } = require('../models');
 const createUser = async (req, res) => {
   try {
     const user = await User.create(req.body);
-    res.status(200).json({ user });
+    res.status(200).json(user);
   } catch (error) {
     console.log(error);
   }
@@ -11,7 +11,9 @@ const createUser = async (req, res) => {
 
 const getUser = async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.params.userId });
+    const user = await User.findOne({ _id: req.params.userId }).populate(
+      'thoughts'
+    );
     res.status(200).json({ user });
   } catch (error) {
     res.status(404).json({ msg: `No users found with id` });

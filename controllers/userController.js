@@ -45,9 +45,24 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+  try {
+    const user = await User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $set: req.body },
+      { runValidators: true, new: true }
+    );
+    console.log(user);
+    res.status(200).json({ msg: 'updated user' });
+  } catch (err) {
+    res.status(404).json({ msg: `No users found with this id`, err: err });
+  }
+};
+
 module.exports = {
   createUser,
   getUser,
   getUsers,
   deleteUser,
+  updateUser,
 };

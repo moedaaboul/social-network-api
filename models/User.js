@@ -3,6 +3,18 @@ const { Schema, model } = require('mongoose');
 // More on validation here: https://mongoosejs.com/docs/validation.html
 const userSchema = new Schema(
   {
+    thoughts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'thought',
+      },
+    ],
+    friends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'user',
+      },
+    ],
     username: {
       type: String,
       required: [true, 'Please provide name'],
@@ -18,18 +30,6 @@ const userSchema = new Schema(
       ],
       unique: true,
     },
-    thoughts: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'thought',
-      },
-    ],
-    friends: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'user',
-      },
-    ],
   },
   {
     toJSON: {

@@ -7,15 +7,6 @@ const reactionSchema = new Schema(
       type: Schema.Types.ObjectId,
       default: () => new Types.ObjectId(),
     },
-    reactionBody: {
-      type: String,
-      required: true,
-      maxlength: 280,
-    },
-    username: {
-      type: String,
-      required: true,
-    },
     createdAt: {
       type: Date,
       default: Date.now,
@@ -29,6 +20,15 @@ const reactionSchema = new Schema(
             minute: 'numeric',
           }).format(new Date(createdAt))
         ),
+    },
+    reactionBody: {
+      type: String,
+      required: true,
+      maxlength: 280,
+    },
+    username: {
+      type: String,
+      required: true,
     },
   },
   {
@@ -48,6 +48,10 @@ const thoughtSchema = new Schema(
       minlength: 1,
       maxlength: 280,
     },
+    username: {
+      type: String,
+      required: [true, 'Please provide username'],
+    },
     createdAt: {
       type: Date,
       default: Date.now(),
@@ -61,10 +65,6 @@ const thoughtSchema = new Schema(
             minute: 'numeric',
           }).format(new Date(createdAt))
         ),
-    },
-    username: {
-      type: String,
-      required: [true, 'Please provide username'],
     },
     reactions: [reactionSchema],
   },

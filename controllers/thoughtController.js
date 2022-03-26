@@ -3,13 +3,12 @@ const { Thought, User } = require('../models');
 const createThought = async (req, res) => {
   try {
     const thought = await Thought.create(req.body);
-    const newUser = await User.findOneAndUpdate(
+    const updatedUser = await User.findOneAndUpdate(
       { username: req.body.username },
       { $addToSet: { thoughts: thought._id } },
       { new: true }
     );
-    console.log(newUser);
-    res.status(200).json({ msg: 'created new thought' });
+    res.status(200).json(updatedUser);
   } catch (error) {
     console.log(error);
   }
@@ -17,8 +16,8 @@ const createThought = async (req, res) => {
 
 const getThought = async (req, res) => {
   try {
-    const response = await Thought.findOne({ _id: req.params.thoughtId });
-    res.status(200).json(response);
+    const thought = await Thought.findOne({ _id: req.params.thoughtId });
+    res.status(200).json(thought);
   } catch (error) {
     res.status(404).json({ msg: `No thoughts found with id` });
   }
@@ -26,8 +25,8 @@ const getThought = async (req, res) => {
 
 const getAllThoughts = async (req, res) => {
   try {
-    const response = await Thought.find({});
-    res.status(200).json(response);
+    const thoughts = await Thought.find({});
+    res.status(200).json(thoughts);
   } catch (error) {
     res.status(404).json({ msg: `No thoughts found`, error: error });
   }
@@ -35,10 +34,10 @@ const getAllThoughts = async (req, res) => {
 
 const deleteThought = async (req, res) => {
   try {
-    const thought = await Thought.findByIdAndDelete({
+    const deletedThought = await Thought.findByIdAndDelete({
       _id: req.params.thoughtId,
     });
-    res.status(200).json(thought);
+    res.status(200).json({ message: 'thought deleted!', deletedThought });
   } catch (error) {
     res.status(404).json({ msg: `No users found`, error: error });
   }
@@ -46,12 +45,12 @@ const deleteThought = async (req, res) => {
 
 const updateThought = async (req, res) => {
   try {
-    const thought = await Thought.findOneAndUpdate(
+    const updatedThought = await Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $set: req.body },
       { runValidators: true, new: true }
     );
-    res.status(200).json(thought);
+    res.status(200).json(updatedThought);
   } catch (err) {
     res.status(404).json({ msg: `No thoughts found with this id`, err: err });
   }

@@ -2,19 +2,19 @@ const { User, Thought } = require('../models');
 
 const createUser = async (req, res) => {
   try {
-    const user = await User.create(req.body);
-    res.status(200).json(user);
+    const newUser = await User.create(req.body);
+    res.status(200).json(newUser);
   } catch (error) {
-    console.log(error);
+    res.status(500).json({ msg: `new user could not be created!`, error });
   }
 };
 
 const getUser = async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.params.userId })
+    const singleUser = await User.findOne({ _id: req.params.userId })
       .populate('thoughts')
       .populate('friends');
-    res.status(200).json({ user });
+    res.status(200).json(singleUser);
   } catch (error) {
     res.status(404).json({ msg: `No users found with id` });
   }
@@ -22,8 +22,8 @@ const getUser = async (req, res) => {
 
 const getUsers = async (req, res) => {
   try {
-    const users = await User.find({});
-    res.status(200).json({ users });
+    const allUsers = await User.find({});
+    res.status(200).json(allUsers);
   } catch (error) {
     res.status(404).json({ msg: `No users found`, error: error });
   }
@@ -31,29 +31,32 @@ const getUsers = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    const user = await User.findByIdAndDelete({
+    const deletedUser = await User.findByIdAndDelete({
       _id: req.params.userId,
     });
-    console.log(user);
-    const deleteThoughts = await Thought.deleteMany({
-      _id: { $in: user.thoughts },
+    const deletedThoughts = await Thought.deleteMany({
+      _id: { $in: deletedUser.thoughts },
     });
-    console.log(deleteThoughts);
-    res.status(200).json({ msg: 'deleted all related thoughts and user' });
+    res.status(200).json({
+      message: 'user and associated thoughts deleted!',
+      deletedUser,
+      deletedThoughts,
+    });
   } catch (err) {
-    res.status(404).json({ msg: `No users found`, err: err });
+    res
+      .status(404)
+      .json({ msg: `No users found with id: ${req.params.userId}` });
   }
 };
 
 const updateUser = async (req, res) => {
   try {
-    const user = await User.findOneAndUpdate(
+    const updatedUser = await User.findOneAndUpdate(
       { _id: req.params.userId },
       { $set: req.body },
       { runValidators: true, new: true }
     );
-    console.log(user);
-    res.status(200).json({ msg: 'updated user' });
+    res.status(200).json(updatedUser);
   } catch (err) {
     res.status(404).json({ msg: `No users found with this id`, err: err });
   }

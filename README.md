@@ -29,15 +29,11 @@ I have created a walkthrough video that demonstrates the functionality of the AP
 
 ## Usage
 
-Need to have MongoDB Compass installed locally to run the app.
-
-Mock seeds have been created and will be added using the following:
-
-    npm run seed
+Need to have MongoDB and MongoDB Compass installed locally to run the app.
 
 The application will then be invoked by using the following command:
 
-    npm start
+    npm run watch
 
 ## Directory Structure
 
@@ -80,16 +76,72 @@ The application will then be invoked by using the following command:
 
 ## Demo
 
-Part 1 - This demos a general overview of the functionality of the api, and starts by demonstrating on how to invoke the application. I then explain how Mongoose syncs to MongoDB on server start, and go over the User and Thought models and their associated schemas and subdocuments. I also provide an brief over the getter method used to format dates, virtuals used, referenced models, self-references, and the objectId method to create a unique id value with a desired name.
+### Part 1
+
+This demos a general overview of the functionality of the api, and starts by demonstrating on how to invoke the application. I then explain how Mongoose syncs to MongoDB on server start, and go over the User and Thought models and their associated schemas and subdocuments. I also provide an brief over the getter method used to format dates, virtuals used, referenced models, self-references, and the objectId method to create a unique id value with a desired name:
+
 [![Watch the video](./assets/my-video-player-01.png)](https://drive.google.com/file/d/1751IHCK9kVsMLaaAFSCidX6goZxg1h4Z/view)
 
-Part 2 - This demos POST User, POST Thought, POST friend, POST Reaction, GET Single User, GET Single Thought, Get All Thoughts, GET All Users. This also showcases a match validation for an incorrect email and formatted dates.
+### Part 2
+
+This demos POST User, POST Thought, POST friend, POST Reaction, GET Single User, GET Single Thought, Get All Thoughts, GET All Users. This also showcases a match validation for an incorrect email and formatted dates:
+
+**`/api/users`**
+
+- `GET` all users
+- `GET` a single user by its `_id` and populated thought and friend data
+- `POST` a new user
+
+**`/api/users/userId`**
+
+- `PUT` to update a user by its `_id`
+
+**`/api/users/:userId/friends/:friendId`**
+
+- `POST` to add a new friend to a user's friend list
+
+**`/api/thoughts`**
+
+- `GET` to get all thoughts
+- `GET` to get a single thought by its `_id`
+- `POST` to create a new thought (don't forget to push the created thought's `_id` to the associated user's `thoughts` array field)
+
+**`/api/thoughts/:thoughtId/reactions`**
+
+- `POST` to create a reaction stored in a single thought's `reactions` array field
+
 [![Watch the video](./assets/my-video-player-02.png)](https://drive.google.com/file/d/137bDMWIz4FoUtAcI7-tdvxzbNXB6TtW_/view)
 
-Part 3 - This demos PUT Thought, POST friend (second), DELETE friend
+### Part 3
+
+This demos PUT Thought, POST friend (second), DELETE friend:
+
+**`/api/thoughts/thoughtId`**
+
+- `PUT` to update a thought by its `_id`
+
+**`/api/users/:userId/friends/:friendId`**
+
+- `DELETE` to remove a friend from a user's friend list
+
 [![Watch the video](./assets/my-video-player-03.png)](https://drive.google.com/file/d/1Q0vKKx1Re6Ae_U4Kx0Z8n2j3PoNqkxvj/view)
 
-Part 4 - This demos DELETE Reaction, DELETE Thought, DELETE User (and associated thoughts)
+### Part 4
+
+This demos DELETE Reaction, DELETE Thought, DELETE User (and associated thoughts):
+
+**`/api/thoughts/:thoughtId/reactions`**
+
+- `DELETE` to pull and remove a reaction by the reaction's `reactionId` value
+
+**`/api/thoughts/thoughtId`**
+
+- `DELETE` to remove a thought by its `_id`
+
+**`/api/users/userId`**
+
+- `DELETE` to remove user by its `_id` and removes a user's associated thoughts when deleted.
+
 [![Watch the video](./assets/my-video-player-04.png)](https://drive.google.com/file/d/1Mbz2k0sMDzOk7h9L7TgZCGWuHDxYjVyD/view)
 
 ## Acknowledgements

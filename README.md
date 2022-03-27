@@ -80,7 +80,17 @@ The application will then be invoked by using the following command:
 
 ## Demo
 
-[![Watch the video](./assets/my-video-player.png)](https://watch.screencastify.com/v/J1ARaNg5oh2HtJBqz7RX)
+Part 1 - This demos a general overview of the functionality of the api, and starts by demonstrating on how to invoke the application. I then explain how Mongoose syncs to MongoDB on server start, and go over the User and Thought models and their associated schemas and subdocuments. I also provide an brief over the getter method used to format dates, virtuals used, referenced models, self-references, and the objectId method to create a unique id value with a desired name.
+[![Watch the video](./assets/my-video-player-01.png)](https://drive.google.com/file/d/1751IHCK9kVsMLaaAFSCidX6goZxg1h4Z/view)
+
+Part 2 - This demos POST User, POST Thought, POST friend, POST Reaction, GET Single User, GET Single Thought, Get All Thoughts, GET All Users. This also showcases a match validation for an incorrect email and formatted dates.
+[![Watch the video](./assets/my-video-player-02.png)](https://drive.google.com/file/d/137bDMWIz4FoUtAcI7-tdvxzbNXB6TtW_/view)
+
+Part 3 - This demos PUT Thought, POST friend (second), DELETE friend
+[![Watch the video](./assets/my-video-player-03.png)](https://drive.google.com/file/d/1Q0vKKx1Re6Ae_U4Kx0Z8n2j3PoNqkxvj/view)
+
+Part 4 - This demos DELETE Reaction, DELETE Thought, DELETE User (and associated thoughts)
+[![Watch the video](./assets/my-video-player-04.png)](https://drive.google.com/file/d/1Mbz2k0sMDzOk7h9L7TgZCGWuHDxYjVyD/view)
 
 ## Acknowledgements
 

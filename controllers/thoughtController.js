@@ -8,7 +8,7 @@ const createThought = async (req, res) => {
       { $addToSet: { thoughts: thought._id } },
       { new: true }
     );
-    res.status(200).json(updatedUser);
+    res.status(200).json({ thought, updatedUser });
   } catch (error) {
     console.log(error);
   }
